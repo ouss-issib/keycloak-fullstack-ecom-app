@@ -1,0 +1,59 @@
+.product-card {
+  transition: all 0.3s ease;
+  border: 1px solid #e9ecef;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15) !important;
+  border-color: #0d6efd;
+}
+
+.product-card .card-title {
+  font-weight: 600;
+  color: #333;
+  min-height: 3rem;
+  display: flex;
+  align-items: center;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.btn-primary {
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.badge {
+  font-size: 0.85rem;
+  padding: 0.5rem 0.75rem;
+}
+
+/* Loading State */
+.spinner-border-sm {
+  border-width: 0.25em !important;
+}
+
+.alert-info {
+  border-left: 4px solid #0d6efd;
+}
+
+.alert-danger {
+  border-left: 4px solid #dc3545;
+}
+
+.alert-warning {
+  border-left: 4px solid #ffc107;
+}

@@ -1,0 +1,120 @@
+<div class="container-fluid py-5">
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="mb-1">Our Products</h1>
+      <p class="text-muted">Browse our collection of premium items</p>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  @if (loading()) {
+    <div class="row">
+      <div class="col-12">
+        <div class="alert alert-info d-flex align-items-center" role="alert">
+          <div class="spinner-border spinner-border-sm me-2" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div>Loading products...</div>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Error State -->
+  @if (error()) {
+    <div class="row">
+      <div class="col-12">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>Error:</strong> {{ error() }}
+          <button type="button" class="btn-close" (click)="loadProducts()"></button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Empty State -->
+  @if (!loading() && !error() && products().length === 0) {
+    <div class="row">
+      <div class="col-12">
+        <div class="alert alert-warning text-center py-5">
+          <i class="bi bi-inbox" style="font-size: 3rem; color: #ffc107;"></i>
+          <h4 class="mt-3">No Products Available</h4>
+          <p class="text-muted">There are currently no products to display.</p>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Products Table -->
+  @if (!loading() && !error() && products().length > 0) {
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive">
+          <table class="table table-hover table-striped">
+            <thead class="table-dark">
+              <tr>
+                <th>#</th>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>In Stock</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (product of products(); track product.id) {
+                <tr>
+                  <td class="text-muted small">{{ $index + 1 }}</td>
+                  <td>
+                    <strong>{{ product.name }}</strong>
+                  </td>
+                  <td>
+                    <span class="badge bg-success">${{ product.price.toLocaleString() }}</span>
+                  </td>
+                  <td>
+                    @if (product.quantity > 0) {
+                      <span class="badge bg-info">{{ product.quantity }} units</span>
+                    } @else {
+                      <span class="badge bg-danger">Out of Stock</span>
+                    }
+                  </td>
+                  <td>
+                    <button class="btn btn-sm btn-primary" [disabled]="product.quantity === 0">Add to Cart</button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cards View (Alternative) -->
+    <div class="row mt-5 pt-4 border-top">
+      <div class="col-12 mb-3">
+        <h3>Card View</h3>
+      </div>
+      @for (product of products(); track product.id) {
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card product-card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">{{ product.name }}</h5>
+              <div class="mb-3">
+                <span class="h4 text-primary">${{ product.price.toLocaleString() }}</span>
+              </div>
+              <p class="card-text text-muted">
+                @if (product.quantity > 0) {
+                  <span class="badge bg-info">{{ product.quantity }} in stock</span>
+                } @else {
+                  <span class="badge bg-danger">Out of Stock</span>
+                }
+              </p>
+              <button class="btn btn-primary w-100" [disabled]="product.quantity === 0">
+                <i class="bi bi-cart-plus"></i> Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
