@@ -27,7 +27,6 @@ public class ProductController {
 
     @GetMapping("/products/{id}")
     public Product getProductById(@PathVariable(name = "id") String id){
-        Product product = productRepository.findById(id).get();
-        return product;
+        return productRepository.findById(id).get();
     }
 }
