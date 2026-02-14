@@ -4,77 +4,53 @@
       <img src="/favicon.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top me-2">
       EcomStore
     </a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNav"
-      aria-controls="navbarNav"
-      aria-expanded="false"
-      aria-label="Toggle navigation">
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
+      <ul class="navbar-nav ms-auto align-items-center" *ngIf="authState$ | async as state">
+
         <li class="nav-item">
           <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
         </li>
-        <li class="nav-item">
+        <li *ngIf="state.roles.includes('ADMIN')" class="nav-item">
           <a class="nav-link" routerLink="/products" routerLinkActive="active">Products</a>
         </li>
-        <li class="nav-item ms-2">
-          <a class="btn btn-sm btn-primary" href="#">
-            <i class="bi bi-cart"></i> Cart (0)
-          </a>
-        </li>
 
-        <!-- Authenticated User Section: uses displayUser$ from component -->
-        <li *ngIf="displayUser$ | async as user" [class.show]="showDropdown" class="nav-item dropdown ms-3">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="userDropdown"
-            role="button"
-            (click)="toggleDropdown($event)"
-            [attr.aria-expanded]="showDropdown"
-          >
-            <i class="bi bi-person-circle me-2"></i>
-            {{ user?.name }}
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown" [class.show]="showDropdown">
-            <li *ngIf="user">
-              <span class="dropdown-header">{{ user.email }}</span>
-            </li>
-            <li>
-              <hr class="dropdown-divider" />
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                <i class="bi bi-person me-2"></i>Profile
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                <i class="bi bi-gear me-2"></i>Settings
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider" />
-            </li>
-            <li>
-              <button class="dropdown-item text-danger" (click)="logout()" type="button">
-                <i class="bi bi-box-arrow-right me-2"></i>Logout
-              </button>
-            </li>
-          </ul>
-        </li>
+        <ng-container *ngIf="state.authenticated; else loggedOut">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="accountDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person-circle me-2"></i>
+              {{ state.username || 'Account' }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
 
-        <!-- Visible Logout Button for quick access -->
-        <li *ngIf="displayUser$ | async" class="nav-item ms-2">
-          <button class="btn btn-outline-light btn-sm" (click)="logout()" type="button">
-            <i class="bi bi-box-arrow-right me-1"></i>Logout
-          </button>
-        </li>
+              <li *ngIf="state.roles.includes('ADMIN')">
+                <a class="dropdown-item" routerLink="/products">Admin Products</a>
+              </li>
+
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li>
+                <button class="dropdown-item text-danger" (click)="handleLogout()">
+                  <i class="bi bi-box-arrow-right me-2"></i>Logout
+                </button>
+              </li>
+            </ul>
+          </li>
+        </ng-container>
+
+        <ng-template #loggedOut>
+          <li class="nav-item">
+            <button class="btn btn-outline-light ms-lg-3" (click)="handleLogin()">
+              Login
+            </button>
+          </li>
+        </ng-template>
 
       </ul>
     </div>

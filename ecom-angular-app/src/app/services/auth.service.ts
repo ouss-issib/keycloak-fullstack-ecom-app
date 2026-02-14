@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { KeycloakService } from 'angular-keycloak';
+import { KeycloakService } from 'keycloak-angular';
 
 export interface AuthState {
   initialized: boolean;
@@ -35,7 +35,7 @@ export class AuthService {
     this.state$.next({
       initialized: true,
       authenticated,
-      username: profile?.username || null,
+      username: profile?.firstName + " " + profile?.lastName || null,
       roles,
       token
     });

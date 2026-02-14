@@ -1,59 +1,35 @@
+import { AuthService, AuthState } from './../../services/auth.service';
+import { KeycloakService } from 'keycloak-angular';
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+import { KeycloakProfile } from 'keycloak-js';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-
 @Component({
   selector: 'app-navbar',
   standalone: false,
   templateUrl: './navbar.html',
-  styleUrl: './navbar.css',
+  styleUrls: ['./navbar.css'],
 })
 export class Navbar implements OnInit {
-  // Observables exposed to the template
-  isAuthenticated$!: Observable<boolean>;
-  displayUser$!: Observable<{ name: string | null; email: string | null } | null>;
-  // local UI state for dropdown
-  showDropdown = false;
+// We expose the observable directly to the template
+  authState$: Observable<AuthState>;
 
-  constructor(
-    public authService: AuthService,
-    private router: Router
-  ) {}
-
-  ngOnInit() {
-    // auth$ emits AuthState { initialized, authenticated, username, roles, token }
-    this.isAuthenticated$ = this.authService.auth$.pipe(map(s => s.authenticated));
-
-    // Map to a lightweight user object used by the template
-    this.displayUser$ = this.authService.auth$.pipe(
-      map(s =>
-        s.authenticated
-          ? { name: s.username || null, email: null }
-          : null
-      )
-    );
-
-    // If AuthService requires an initial load call, ensure it's done elsewhere (APP_INITIALIZER)
+  constructor(private authService: AuthService) {
+    this.authState$ = this.authService.auth$;
   }
 
-  toggleDropdown(event?: Event) {
-    if (event) event.preventDefault();
-    this.showDropdown = !this.showDropdown;
+  ngOnInit(): void {
+    // Ensure the state is loaded (if not already handled by APP_INITIALIZER)
+    this.authService.loadState();
   }
 
-  closeDropdown() {
-    this.showDropdown = false;
+  handleLogin() {
+    this.authService.login();
   }
 
-  logout(): void {
-    // AuthService.logout delegates to Keycloak when available
+  handleLogout() {
     this.authService.logout();
-    // Keycloak logout typically handles redirects; if not, navigate home
-    try {
-      this.router.navigate(['/home']);
-    } catch {}
   }
+
+
 }
