@@ -1,6 +1,67 @@
-<main class="container-fluid">
-  <div class="py-5">
-    <h1>Welcome to {{ title() }}</h1>
-    <p class="lead">Your one-stop shop for everything you need</p>
+<main>
+  <section class="bg-dark text-white py-5 mb-5 shadow-lg position-relative overflow-hidden"
+    style="background: linear-gradient(135deg, #212529 0%, #343a40 100%);">
+    <div class="container py-5">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <h1 class="display-3 fw-bold mb-3 animate__animated animate__fadeInDown">
+            Welcome to <span class="text-primary">{{ title() }}</span>
+          </h1>
+          <p class="lead fs-4 mb-4 opacity-75">
+            Your one-stop shop for premium electronics, fashion, and lifestyle essentials.
+            Experience quality delivered to your doorstep.
+          </p>
+          <div class="d-grid gap-3 d-md-flex justify-content-md-start">
+            <a routerLink="/products" class="btn btn-primary btn-lg px-5 py-3 fw-bold shadow">
+              <i class="bi bi-bag-check me-2"></i>Shop Now
+            </a>
+            <a routerLink="/orders" class="btn btn-outline-light btn-lg px-5 py-3 fw-bold">
+              View My Orders
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-6 d-none d-lg-block text-center">
+          <i class="bi bi-cart4 text-primary" style="font-size: 15rem; opacity: 0.2;"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container pb-5">
+    <div class="row g-4 text-center">
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm p-4">
+          <div
+            class="feature-icon bg-primary bg-gradient text-white rounded-circle mb-3 mx-auto d-flex align-items-center justify-content-center"
+            style="width: 60px; height: 60px;">
+            <i class="bi bi-truck fs-3"></i>
+          </div>
+          <h3 class="h5 fw-bold">Fast Delivery</h3>
+          <p class="text-muted mb-0">Free shipping on all orders over 500 MAD within Morocco.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm p-4">
+          <div
+            class="feature-icon bg-success bg-gradient text-white rounded-circle mb-3 mx-auto d-flex align-items-center justify-content-center"
+            style="width: 60px; height: 60px;">
+            <i class="bi bi-shield-check fs-3"></i>
+          </div>
+          <h3 class="h5 fw-bold">Secure Payments</h3>
+          <p class="text-muted mb-0">Your transactions are protected by industry-leading security.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm p-4">
+          <div
+            class="feature-icon bg-info bg-gradient text-white rounded-circle mb-3 mx-auto d-flex align-items-center justify-content-center"
+            style="width: 60px; height: 60px;">
+            <i class="bi bi-headset fs-3"></i>
+          </div>
+          <h3 class="h5 fw-bold">24/7 Support</h3>
+          <p class="text-muted mb-0">Our dedicated support team is here to help you anytime.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </main>
