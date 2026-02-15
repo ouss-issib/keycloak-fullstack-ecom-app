@@ -11,6 +11,9 @@ import { Home } from './ui/home/home';
 import { Products } from './ui/products/products';
 import { KeycloakService, KeycloakAngularModule } from 'keycloak-angular';
 import { initializeKeycloak } from './keycloak-init';
+import { Orders } from './ui/orders/orders';
+import { CommonModule } from '@angular/common';
+import { OrderDetails } from './ui/order-details/order-details';
 
 
 @NgModule({
@@ -18,7 +21,9 @@ import { initializeKeycloak } from './keycloak-init';
     App,
     Navbar,
     Home,
-    Products
+    Products,
+    Orders,
+    OrderDetails
   ],
   imports: [
     BrowserModule,
@@ -26,6 +31,7 @@ import { initializeKeycloak } from './keycloak-init';
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
+    CommonModule,
     KeycloakAngularModule
   ],
   providers: [

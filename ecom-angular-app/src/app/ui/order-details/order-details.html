@@ -1,0 +1,61 @@
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <a routerLink="/orders" class="btn btn-light shadow-sm">
+      <i class="bi bi-arrow-left"></i> Back to List
+    </a>
+    <h2 class="mb-0">Order Details</h2>
+  </div>
+
+  @if (order(); as o) {
+  <div class="card shadow-sm border-0 overflow-hidden">
+    <div class="card-header bg-white py-3 border-bottom-0">
+      <div class="row">
+        <div class="col-sm-6">
+          <p class="text-muted small mb-0 text-uppercase">Reference</p>
+          <h5 class="fw-bold">#{{ o.id }}</h5>
+        </div>
+        <div class="col-sm-6 text-sm-end">
+          <p class="text-muted small mb-0 text-uppercase">Status</p>
+          <span class="badge bg-warning text-dark px-3 py-2">{{ o.state }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th class="ps-4">Product Name</th>
+            <th class="text-center">Unit Price (Item)</th>
+            <th class="text-center">Quantity</th>
+            <th class="text-end pe-4">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of o.productItems; track item.id) {
+          <tr>
+            <td class="ps-4">
+              <div class="fw-bold">{{ item.name }}</div>
+              <small class="text-muted">SKU: {{ item.productId }}</small>
+            </td>
+            <td class="text-center">{{ item.price | currency:'MAD' }}</td>
+            <td class="text-center">x{{ item.quantity }}</td>
+            <td class="text-end pe-4 fw-bold">
+              {{ (item.price * item.quantity) | currency:'MAD' }}
+            </td>
+          </tr>
+          }
+        </tbody>
+        <tfoot class="table-group-divider">
+          <tr class="h5">
+            <td colspan="3" class="text-end py-3">Grand Total:</td>
+            <td class="text-end pe-4 py-3 text-primary fw-bold">
+              {{ calculateOrderTotal(o) | currency:'MAD' }}
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  }
+</div>

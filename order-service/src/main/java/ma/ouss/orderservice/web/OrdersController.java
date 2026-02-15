@@ -34,8 +34,9 @@ public class OrdersController {
     @GetMapping("/orders/{id}")
     public Order getOrderById(@PathVariable(name = "id") String id){
         Order order = orderRepository.findById(id).get();
+
         order.getProductItems().forEach(p->{
-            p.setProduct(inventoryRestClient.getProductById(p.getProduct().getId()));
+            p.setProduct(inventoryRestClient.getProductById(p.getProductId()));
         });
         return order;
     }
