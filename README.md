@@ -77,4 +77,4 @@ Cette activité est réalisée dans le cadre du module **Systèmes Distribués e
 | **Déconnexion** | ![](./captures/logout.png) |
 
 ---
-*Réalisé par **Nizar** - 2026*
+*Réalisé par **Ouss Issib** - 2026*
