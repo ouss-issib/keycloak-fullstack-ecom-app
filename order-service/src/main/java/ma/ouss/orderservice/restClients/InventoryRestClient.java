@@ -12,6 +12,6 @@ public interface InventoryRestClient {
     @GetMapping("/api/products")
     List<Product> getAllProducts();
 
-    @GetMapping("/api/product/{id}")
+    @GetMapping("/api/products/{id}")
     Product getProductById(@PathVariable(name = "id") String id);
 }

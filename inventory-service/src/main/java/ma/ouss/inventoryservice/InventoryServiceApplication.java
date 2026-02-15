@@ -21,19 +21,19 @@ public class InventoryServiceApplication {
     CommandLineRunner commandLineRunner(ProductRepository productRepository) {
         return args -> {
           productRepository.save(Product.builder()
-                          .id(UUID.randomUUID().toString())
+                          .id("P01")
                           .name("Asus Rog 17")
                           .price(15000)
                           .quantity(2)
                   .build());
             productRepository.save(Product.builder()
-                    .id(UUID.randomUUID().toString())
+                    .id("P02")
                     .name("Printer LG")
                     .price(870)
                     .quantity(1)
                     .build());
             productRepository.save(Product.builder()
-                    .id(UUID.randomUUID().toString())
+                    .id("P03")
                     .name("Iphone 17")
                     .price(20500)
                     .quantity(10)

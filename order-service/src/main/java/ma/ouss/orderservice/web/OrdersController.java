@@ -15,14 +15,20 @@ import java.util.List;
 public class OrdersController {
     private OrderRepository orderRepository;
     private InventoryRestClient inventoryRestClient;
-    public OrdersController(OrderRepository orderRepository) {
+    public OrdersController(OrderRepository orderRepository,InventoryRestClient inventoryRestClient) {
         this.orderRepository = orderRepository;
         this.inventoryRestClient = inventoryRestClient;
     }
 
     @GetMapping("/orders")
     public List<Order> getAllOrders(){
-        return orderRepository.findAll();
+        List<Order> orderList = orderRepository.findAll();
+        orderList.forEach(o->{
+            o.getProductItems().forEach(p->{
+                p.setProduct(inventoryRestClient.getProductById(p.getProductId()));
+            });
+        });
+        return orderList;
     }
 
     @GetMapping("/orders/{id}")
